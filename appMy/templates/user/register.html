@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+<style>
+    h2 {
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .hero-image {
+        height: 100%;
+    }
+
+    .hero-text {
+        background-color: rgba(0, 0, 0, 0.700);
+        width: 500px;
+        top: 50%;
+        color: gray;
+    }
+
+    .hero-text2 {
+        width: 75%;
+        margin: auto;
+    }
+
+    .form-control {
+        background-color: rgb(34, 34, 34);
+        border: none;
+        color: gray;
+    }
+
+    .p-grey {
+        color: grey;
+    }
+
+    .con-footer {
+        position: absolute;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.700);
+    }
+
+    @media screen and (max-width: 700px) {
+        .hero-image {
+            background-image: linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1)), url(img/arkaplan.jpg);
+        }
+    }
+</style>
+{% endblock css %}
+
+{% block nonheader %}
+
+    <div class="hero-image">
+        <!-- navbar -->
+        <nav class="navbar">
+            <div class="container">
+                <a href="" class="navbar-brand"><img src="{% static 'img/netflix_logo.png' %}" alt=""></a>
+            </div>
+        </nav>
+
+        <div class="hero-text">
+            <!-- form -->
+            <form method="POST" class="hero-text2 mt-5 mb-5">
+                {% csrf_token %}
+                <h2>Kaydol</h2>
+
+                <div class="mb-3">
+                    <input type="text" name="fname" class="form-control form-control-lg mt-3" placeholder="İsim">
+                    <input type="email" name="email" class="form-control form-control-lg mt-3" placeholder="Email">
+                    <input type="text" name="username" class="form-control form-control-lg mt-3" placeholder="Kullanıcı Adı">
+                    <input type="password" name="password1" id="" class="form-control form-control-lg mt-3" placeholder="Şifre">
+                    <input type="password" name="password2" id="" class="form-control form-control-lg mt-3" placeholder="Yeniden Şifre">
+                </div>
+                <div class="d-grid gap-2">
+                    <button class="btn btn-danger btn-lg" type="submit">Kaydol</button>
+                </div>
+
+
+                <p class="p-grey">
+                    Hesabım zaten var <a href="{% url 'loginUser' %}">giriş yap</a> <br><br>
+                </p>
+            </form>
+        </div>
+
+      
+    </div>
+
+{% endblock nonheader %}
