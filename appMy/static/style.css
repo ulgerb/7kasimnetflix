@@ -87,6 +87,50 @@ footer .nav-link:hover {
     text-decoration: underline;
 }
 
+/* MESSAGES START */
+.tost {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 10;
+    animation: timeend 5.8s both;
+    opacity: 1;
+}
+
+.time-animate {
+    width: 100%;
+    height: 10px;
+    background: rgba(255, 255, 255, 0.85);
+    border-bottom-right-radius: 0.375rem;
+    border-bottom-left-radius: 0.375rem;
+    overflow: hidden;
+}
+
+.time-animate div {
+    width: 100%;
+    height: 100%;
+    background: #d59393;
+    animation: timew 5s linear both;
+}
+
+@keyframes timew {
+    100% {
+        width: 0;
+    }
+}
+
+@keyframes timeend {
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+/* MESSAGES END */
+
 @media screen and (max-width: 992px) {
     .text {
         text-align: center;
