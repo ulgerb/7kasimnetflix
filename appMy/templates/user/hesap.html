@@ -73,19 +73,56 @@
                     </div>
 
                     <div class="col">
-                        <button class="accordion"><img src="{% static 'img/smile-profil.png' %}" alt=""> Berkay </button>
-                        <div class="panel">
-                            <p>
-                                <strong>Dil</strong> <br>
-                                <a href="" class="text-end">Değiştir</a>
-                            </p>
-                            <hr>
-                            <p>
-                                <strong>İzleme Kısıtlamaları</strong> <br>
-                                <a href="" class="text-end">Değiştir</a>
-                            </p>
+                        <div class="accordion accordion-flush" id="accordionFlushExample">
+                            
+                            {% for i in profiles %}
+                            <div class="accordion-item bg-transparent">
+                                <h2 class="accordion-header" id="flush-headingOne">
+                                    <button class="accordion-button collapsed text-bg-dark" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#profile{{ i.id }}" aria-expanded="false" aria-controls="profile{{ i.id }}">
+                                        <img width="40" height="40" style="object-fit: cover;" src="{{ i.image.url }}" alt="">
+                                        <p class="mx-3 mb-0">{{ i.name }}</p>
+                                        
+                                    </button>
+                                </h2>
+                                <div id="profile{{ i.id }}" class="accordion-collapse collapse text-bg-dark" aria-labelledby="flush-headingOne"
+                                    data-bs-parent="#accordionFlushExample">
+                                    <div class="accordion-body d-flex justify-content-between">
+                                        <button class="btn btn-success">Düzenle</button>
+                                        <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#profilDel{{ i.id }}">Sil</a>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Profile Delete -->
+                            <div class="modal fade" id="profilDel{{ i.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Silmek istediğine eminmisin?</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <div class="modal-body">
+                                                <div>
+                                                    <label class="form-label" for="">Hesap Şifresinizi Giriniz</label>
+                                                    <input class="form-control" name="password" type="password">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" name="submit" value="profilDelete" class="btn btn-danger">Evet</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hayır</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                                
                         </div>
-                    </div>
                 </div>
 
             </div>

@@ -30,26 +30,52 @@
         <div class="row w-75 m-auto bg-black bg-opacity-25" >
             <h1 class="text-center text-light">Kimler İzliyor?</h1>
 
-            
-           
             {% for i in profiles %}
             <div class="col-3 mt-5 mb-5">
-                <a href="browse-index.html" class="text-decoration-none text-secondary">
+                <a class="text-decoration-none text-secondary" 
+                {% if i.password_active %} data-bs-toggle="modal" data-bs-target="#profile{{ i.id }}"{% else %} href="{% url 'netflixPage' i.slug %}" {% endif %}>
                     <div class="card bg-transparent">
                         <div style="width: 100%; height:200px;">
                             <img src="{{ i.image.url }}" style="width: 100%; height: 100%; object-fit: cover;" class="card-img-top" alt="">
-                        
                         </div>
                         <div>
                             <h5 class="card-title text-center ">{{ i.name }}</h5>
                         </div>
                     </div>
                 </a>
+                
+                {% if i.password_active %}
+                <!-- Profil Şifre Modal -->
+                <div class="modal fade" id="profile{{ i.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Profil Şifresini Giriniz</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form method="POST" enctype="multipart/form-data">
+                                <div class="modal-body">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="profileid" value="{{ i.id }}">
+                                    <input class="form-control" name="password" type="password">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" name="submit" value="profileLogin">Giriş</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+                    
             </div>
+
             {% endfor %}
             
+            
+            {% if profiles|length < 4 %} <!-- Profil Ekleme -->
             <div class="col-3 mt-5 mb-5">
-                <a href="browse-index.html" class="text-decoration-none text-secondary">
+                <a href="" class="text-decoration-none text-secondary" data-bs-toggle="modal" data-bs-target="#profileAdd">
                     <div class="card bg-transparent">
                         <div class="bg-dark d-flex justify-content-center align-items-center" style="width: 100%; height:200px;">
                             <span style="font-size: 10rem;" class="text-white-50">+</span>
@@ -59,11 +85,48 @@
                         </div>
                     </div>
                 </a>
+                
+                
+                <!-- Profil Ekle Modal -->
+                <div class="modal fade" id="profileAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Profil Ekle</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <form method="POST" enctype="multipart/form-data">
+                                <div class="modal-body">
+                                    {% csrf_token %}
+                                    <label for="" class="form-label">Profil Adı</label>
+                                    <input name="pname" class="form-control " type="text">
+                                    <input name="image" class="form-control my-3" type="file">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <input type="checkbox" name="password_active" id="password-active">
+                                            <label for="password-active">Şifre Olsun</label>
+                                        </div>
+                                        <div class="d-flex align-items-center ms-3">
+                                            <label for="" class="form-label m-0 mx-2">Şifre:</label>
+                                            <input style="max-width: 100px;" name="password" class="form-control" type="text">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <input type="checkbox" name="kid" id="kid-active">
+                                        <label for="kid-active">Çocuk Kilidi</label>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" name="submit" value="profileAdd">Ekle</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <div class="buton mb-5 text-center">
-                <button class="bg-dark text-secondary w-50 p-2 ">Profil Yönetimi</button>
-            </div>
+            {% endif %}
+                
+            
         </div>
     </div>
 

@@ -15,8 +15,9 @@ urlpatterns = [
     path('login/', loginUser, name="loginUser"),
     path('register/', registerUser,name="registerUser"),
     path('profile/', profilePage,name="profilePage"),
-    path('account/', accountPage,name="accountPage"),
+    path('account/<slug>/', accountPage,name="accountPage"),
+    path('profileDelete/<pid>/', profileDelete, name="profileDelete"),
     
     # === Video ===
-    path('netflix/', netflixPage,name="netflixPage"),
+    path('netflix/<slug>/', netflixPage,name="netflixPage"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

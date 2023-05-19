@@ -6,7 +6,7 @@ from appUser.models import *
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
 
-   list_display = ('name','user',)
+   list_display = ('name','user','id')
    
 
 

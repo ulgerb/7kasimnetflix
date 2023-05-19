@@ -3,7 +3,7 @@
    <!-- Navbar -->
    <nav class="navbar navbar-expand-lg bg-black fixed-top navbar-dark">
       <div class="container-fluid">
-         <a class="navbar-brand" href="#" style="height: 60px;">
+         <a class="navbar-brand" href="{% url 'netflixPage' profile.slug %}" style="height: 60px;">
             <img src="{% static 'img/netflix_logo.png' %}" height="100" alt="" style="object-position: 0 -25px;">
          </a>
          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
@@ -35,14 +35,14 @@
                <li class="nav-item dropdown" style="margin-right: 100px;">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
                      data-bs-toggle="dropdown" aria-expanded="false">
-                     <img src="{% static 'img/smile-profil.png' %}" alt="">
+                     <img width="40px" height="40px" class="rounded-circle" style="object-fit: cover;" src="{{ profile.image.url }}" alt="">
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                     <li><a class="dropdown-item" href="#">Profil Yönetimi</a></li>
+                     <li><a class="dropdown-item" href="{% url 'profilePage' %}">Profil Yönetimi</a></li>
                      <li>
                         <hr class="dropdown-divider">
                      </li>
-                     <li><a class="dropdown-item" href="#">Hesap</a></li>
+                     <li><a class="dropdown-item" href="{% url 'accountPage' profile.slug %}">Hesap</a></li>
                      <li><a class="dropdown-item" href="#">Yardım Merkezi</a></li>
                      <li><a class="dropdown-item" href="#">Netflix oturumunu kapat</a></li>
                   </ul>
