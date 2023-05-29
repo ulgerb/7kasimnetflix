@@ -1,7 +1,9 @@
 from django.shortcuts import render, get_object_or_404
 from appUser.models import Profile
+from django.contrib.auth.decorators import login_required
 
 
+@login_required(login_url="/login/")
 def netflixPage(request, slug=None):
    # Girişli profil sınırı
    context = {"title": "Netflix"}

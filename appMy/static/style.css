@@ -92,9 +92,10 @@ footer .nav-link:hover {
     position: fixed;
     top: 20px;
     right: 20px;
-    z-index: 10;
+    z-index: 2050 !important;
     animation: timeend 5.8s both;
     opacity: 1;
+    
 }
 
 .time-animate {

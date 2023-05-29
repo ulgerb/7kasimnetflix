@@ -13,10 +13,11 @@ urlpatterns = [
     
     # === USER ===
     path('login/', loginUser, name="loginUser"),
+    path('logout/', logoutUser, name="logoutUser"),
     path('register/', registerUser,name="registerUser"),
     path('profile/', profilePage,name="profilePage"),
     path('account/<slug>/', accountPage,name="accountPage"),
-    path('profileDelete/<pid>/', profileDelete, name="profileDelete"),
+    # path('profileDelete/<pid>/', profileDelete, name="profileDelete"),
     
     # === Video ===
     path('netflix/<slug>/', netflixPage,name="netflixPage"),

@@ -36,20 +36,104 @@
 
                 <div class="row">
                     <h1>Hesap</h1>
+                    <h1>{{ test }}</h1>
                     <hr>
                     <div class="col">
                         <h4>Üyelik ve Ödemeler</h4>
                         <button>Üyeliği iptal et</button>
                     </div>
                     <div class="col">
-                        <strong>berkayulger45920@gmail.com</strong>
-                        <p>Parola:*******</p>
-                        <p>tel: 0537 692 52 42</p>
+                        <strong>{{ request.user.email }}</strong>
+                        <p>Parola: ******{{ userinfo.password|last }}</p>
+                        <p>Telefon: {{ userinfo.tel }}</p>
                     </div>
                     <div class="col">
-                        <a href="">E-postayi değiştir</a> <br>
-                        <a href="">Parolayı değiştir</a> <br>
-                        <a href="">Telefon numarasını değiştir</a>
+                        <a class="text-primary" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#emailModal">E-postayi değiştir</a> <br>
+                       
+                        <!-- Modal -->
+                        <div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Email Değiştir</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form method="POST" action="">
+                                        {% csrf_token %}
+                                        <div class="modal-body">
+                                            <input type="text" class="form-control" name="email" value="{{ profile.user.email }}">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" name="submit" value="emailChange" class="btn btn-success">Kaydet</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Iptal</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <a class="text-primary" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#passwordModal">
+                            Şifreyi
+                            değiştir
+                        </a> <br>
+                        <!-- Modal -->
+                        <div class="modal fade" id="passwordModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Şifre Değiştir</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form method="POST" action="">
+                                        {% csrf_token %}
+                                        <div class="modal-body">
+                                            <div>
+                                                <label class="form-label mt-2" for="">Eski Şifre</label>
+                                                <input type="text" class="form-control" name="password">
+                                            </div>
+                                            <div>
+                                                <label class="form-label mt-2" for="">Yeni Şifre</label>
+                                                <input type="text" class="form-control" name="password1">
+                                            </div>
+                                            <div>
+                                                <label class="form-label mt-2" for="">Tekrar Yeni Şifre</label>
+                                                <input type="text" class="form-control" name="password2">
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" name="submit" value="passwordChange" class="btn btn-success">Kaydet</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Iptal</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                        <a class="text-primary" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#telModal">
+                            Telefonu
+                            değiştir
+                        </a> <br>
+                        <!-- Modal -->
+                        <div class="modal fade" id="telModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Telefon Değiştir</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form method="POST" action="">
+                                        {% csrf_token %}
+                                        <div class="modal-body">
+                                            <input type="text" class="form-control" name="tel" value="{{ userinfo.tel }}">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" name="submit" value="telChange" class="btn btn-success">Kaydet</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Iptal</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -88,7 +172,7 @@
                                 <div id="profile{{ i.id }}" class="accordion-collapse collapse text-bg-dark" aria-labelledby="flush-headingOne"
                                     data-bs-parent="#accordionFlushExample">
                                     <div class="accordion-body d-flex justify-content-between">
-                                        <button class="btn btn-success">Düzenle</button>
+                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#profilUpdate{{ i.id }}">Düzenle</button>
                                         <a class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#profilDel{{ i.id }}">Sil</a>
                                         
                                     </div>
@@ -96,7 +180,7 @@
                             </div>
 
 
-                            <!-- Profile Delete -->
+                            <!-- Profile Delete Control -->
                             <div class="modal fade" id="profilDel{{ i.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -110,11 +194,85 @@
                                                 <div>
                                                     <label class="form-label" for="">Hesap Şifresinizi Giriniz</label>
                                                     <input class="form-control" name="password" type="password">
+                                                    <input type="hidden" name="profilid" value="{{ i.id }}">
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="submit" name="submit" value="profilDelete" class="btn btn-danger">Evet</button>
                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hayır</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Profile Update Control -->
+                            <div class="modal fade" id="profilUpdate{{ i.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Düzenlemek için Hesap Şifresi Giriniz.</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form method="POST">
+                                            {% csrf_token %}
+                                            <div class="modal-body">
+                                                <div>
+                                                    <label class="form-label" for="">Hesap Şifresinizi Giriniz</label>
+                                                    <input class="form-control" name="password" type="password">
+                                                    <input type="hidden" name="profilid" value="{{ i.id }}">
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" name="submit" value="profilUpdate" class="btn btn-danger">Evet</button>
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hayır</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Profile Update Modal -->
+                            
+                            {% if profilid|add:"0" == i.id %}
+                            <div class="modal fade show" id="profilUpdateModal{{ i.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-modal="true"
+                                role="dialog" style="display: block;">
+                            {% else %}
+                            <div class="modal fade" id="profilUpdateModal{{ i.id }}" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                            {% endif %}
+                            
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Profili Düzenle</h1>
+                                            <button type="button" onclick="window.location.href = '{{ request.path }}'" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <form method="POST" enctype="multipart/form-data">
+                                            {% csrf_token %}
+                                            <div class="modal-body">
+                                                <div>
+                                                    <div class="d-flex align-items-center flex-column">
+                                                        <img style="object-fit: cover; border-radius: 50%;" width="100px" height="100px" src="{{ i.image.url }}" alt="">
+                                                        <input class="form-control mt-2" name="image" type="file">
+                                                    </div>
+                                                    <label class="form-label" for="">Profili Adı</label>
+                                                    <input class="form-control" name="pname" value="{{ i.name }}" type="text">
+                                                    <label class="form-label" for="">Profili Şifresi</label>
+                                                    <input class="form-control" name="password" value="{{ i.password }}" type="password">
+                                                    <div class="my-3">
+                                                        <label class="form-check-label" for="password{{ i.id }}">Profili Şifre Aktif</label>
+                                                        <input class="form-check-input" id="password{{ i.id }}" {% if i.password_active %} checked {% endif %} name="password-active" type="checkbox">
+                                                        <label class="form-check-label" for="kid{{ i.id }}">Çocuk Hesabı</label>
+                                                        <input class="form-check-input" id="kid{{ i.id }}" {% if i.kid %} checked {% endif %} name="kid" type="checkbox">
+                                                    </div>
+                                                    <input type="hidden" name="profilid" value="{{ i.id }}">
+                                                </div>
+                                            </div>
+                                            <script>
+                                                
+                                            </script>
+                                            <div class="modal-footer">
+                                                <button type="submit" name="submit" value="profilUpdateModal" class="btn btn-danger">Düzenle</button>
+                                                <button type="button" onclick="window.location.href = '{{ request.path }}'" class="btn btn-secondary" data-bs-dismiss="modal">Hayır</button>
                                             </div>
                                         </form>
                                     </div>
